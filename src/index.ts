@@ -14,8 +14,9 @@ main().catch((error) => setFailed(error.message));
 async function main() {
   try {
     const path = getInput("path", { required: true });
-    const contents = getInput("contents", { required: true });
+    let contents = getInput("contents", { required: true });
     const mode = (getInput("write-mode") || "append").toLocaleLowerCase();
+    const emptyLineEOF = getInput("empty-line-eof") || false;
 
     // Ensure the correct mode is specified
     if (mode !== "append" && mode !== "overwrite" && mode !== "preserve") {
@@ -33,6 +34,11 @@ async function main() {
     const targetDir = dirname(path);
 
     await mkdirP(targetDir);
+
+    // Add an empty line at the end of the file
+    if (emptyLineEOF) {
+      contents += '\n'
+    }
 
     if (mode === "overwrite") {
       await writeFileAsync(path, contents);
