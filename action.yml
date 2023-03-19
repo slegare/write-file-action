@@ -1,5 +1,5 @@
 name: "Write File"
-author: "Damian Reeves"
+author: "Sébastien Légaré"
 description: "Write a file."
 inputs:
   path: # id of input
@@ -12,6 +12,11 @@ inputs:
 
   write-mode:
     description: "The mode of writing to use: `overwrite`, `append`, or `preserve`."
+    required: false
+    default: preserve
+    
+  empty-line-eof:
+    description: "Outputs an empty line at the end of the written file"
     required: false
     default: preserve
 outputs:
