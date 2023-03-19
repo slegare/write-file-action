@@ -1118,8 +1118,9 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const path = core_1.getInput("path", { required: true });
-            const contents = core_1.getInput("contents", { required: true });
+            let contents = core_1.getInput("contents", { required: true });
             const mode = (core_1.getInput("write-mode") || "append").toLocaleLowerCase();
+            const emptyLineEOF = core_1.getInput("empty-line-eof") || false;
             // Ensure the correct mode is specified
             if (mode !== "append" && mode !== "overwrite" && mode !== "preserve") {
                 core_1.setFailed("Mode must be one of: overwrite, append, or preserve");
@@ -1133,6 +1134,10 @@ function main() {
             }
             const targetDir = path_1.dirname(path);
             yield io_1.mkdirP(targetDir);
+            // Add an empty line at the end of the file
+            if (emptyLineEOF) {
+                contents += '\n';
+            }
             if (mode === "overwrite") {
                 yield writeFileAsync(path, contents);
             }
