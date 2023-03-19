@@ -16,6 +16,10 @@ This action writes a file.
 
 **Optional** The mode of writing to use: `overwrite`, `append`, or `preserve`.
 
+### `empty-line-eof`
+
+**Optional** If set to `true` will append an empty line at the end of the written file.
+
 Modes:
 
 - `overwrite` - overwrite the file if it exists
