@@ -18,7 +18,7 @@ inputs:
   empty-line-eof:
     description: "Outputs an empty line at the end of the written file"
     required: false
-    default: preserve
+    default: false
 outputs:
   size:
     description: "The returned size"
