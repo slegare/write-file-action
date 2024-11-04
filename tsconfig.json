@@ -4,13 +4,20 @@
     "module": "commonjs",
     "strict": true,
     "declaration": true,
-    "target": "es6",
-    "sourceMap": true,
-    "lib": ["es6"],
+    "target": "ESNext",
+    "sourceMap": false,
+    "lib": [
+      "ESNext"
+    ],
     "baseUrl": "./",
-    "outDir": "./lib",
+    "outDir": "./dist",
     "rootDir": "./src"
   },
-  "exclude": ["node_modules", "**/*.test.ts"],
-  "include": ["./src"]
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts"
+  ],
+  "include": [
+    "./src"
+  ]
 }

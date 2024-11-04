@@ -1,13 +1,8 @@
 import { getInput, setFailed, setOutput } from "@actions/core";
 import { mkdirP } from "@actions/io";
-import { appendFile, exists, writeFile, stat } from "fs";
-import { dirname, join as joinPath, resolve as resolvePath } from "path";
-import { promisify } from "util";
-
-const appendFileAsync = promisify(appendFile);
-const existsAsync = promisify(exists);
-const writeFileAsync = promisify(writeFile);
-const statAsync = promisify(stat);
+import { existsSync } from "fs";
+import { appendFile, stat, writeFile } from "fs/promises";
+import { dirname } from "path";
 
 main().catch((error) => setFailed(error.message));
 
@@ -25,8 +20,8 @@ async function main() {
     }
 
     // Preserve the file
-    if (mode === "preserve" && (await existsAsync(path))) {
-      const statResult = await statAsync(path);
+    if (mode === "preserve" && existsSync(path)) {
+      const statResult = await stat(path);
       setOutput("size", `${statResult.size}`);
       return;
     }
@@ -41,14 +36,14 @@ async function main() {
     }
 
     if (mode === "overwrite") {
-      await writeFileAsync(path, contents);
+      await writeFile(path, contents);
     } else {
-      await appendFileAsync(path, contents);
+      await appendFile(path, contents);
     }
 
-    const statResult = await statAsync(path);
+    const statResult = await stat(path);
     setOutput("size", `${statResult.size}`);
   } catch (error) {
-    setFailed(error.message);
+    setFailed(((error as unknown) as Error).message);
   }
 }
